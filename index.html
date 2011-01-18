@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml" manifest="clock.manifest">
+<head>
+<title>WORD CLOCK</title>
+<link rel="stylesheet" type="text/css" href="css/CLOCK.css" />
+<meta name="viewport" content="user-scalable=no, width=device-width" />
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.timers-1.2.js"></script>
+<script type="text/javascript" src="js/CLOCK.js"></script>
+<link rel="stylesheet" type="text/css"
+      href="css/mobile.css" media="only screen and (max-width: 480px)" />
+<link rel="stylesheet" type="text/css"
+      href="css/desktop.css" media="screen and (min-width: 481px)" />
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="css/explorer.css" media="all" />
+<![endif]-->
+</head>
+<body>
+
+<div id="main">
+  <div id="clock"></div>
+</div>
+
+<div id="settings">
+  <h2>Options and settings</h2>
+
+    <table border="0" cellpadding="0" cellspacing="4">
+      <tr>
+        <td align="right"><input type="checkbox" id="upperCase" /></td>
+        <td>Capitalize letters</td>
+      </tr>
+      <tr>
+        <td align="right"><input type="checkbox" id="animated" /></td>
+        <td>Animate transitions</td>
+      </tr>
+      <tr>
+        <td align="right"><input type="checkbox" id="highlight" /></td>
+        <td>Highlight message</td>
+      </tr>
+      <tr>
+        <td>#<input type="text" size="6" maxlength="6" id="bgColor" value="000000"/></td>
+        <td>Background color (<span id="bgColorTxt">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>)</td>
+      </tr>
+      <tr>
+        <td>#<input type="text" size="6" maxlength="6" id="hiColor" value="ffffff"/></td>
+        <td>Highlight color (<span id="hiColorTxt">sample</span>)</td>
+      </tr>
+      <tr>
+        <td>#<input type="text" size="6" maxlength="6" id="loColor" value="404040"/></td>
+        <td>Normal color (<span id="loColorTxt">sample</span>)</td>
+      </tr>
+      <tr>
+        <td>#<input type="text" size="6" maxlength="6" id="msgColor" value="ff0000"/></td>
+        <td>Message color (<span id="msgColorTxt">sample</span>)</td>
+      </tr>
+      <tr>
+        <td>#<input type="text" size="6" maxlength="6" id="dateColor" value="404040"/></td>
+        <td>Date color (<span id="dateColorTxt">sample</span>)</td>
+      </tr>
+    </table>
+
+    <p>Font family: <input id="fontFamily" type="text" size="25"/>.</p>
+
+    <h2>Settings</h2>
+    <p>Changing settings reformats the clock face.</p>
+
+    <p>Clock face size:
+      <select id="clockWidth">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select> rows by
+      <select id="clockHeight">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select> columns.
+    </p>
+
+    <table border="0" cellpadding="0" cellspacing="4">
+      <tr>
+        <td align="right"><input type="checkbox" id="showMinutes" /></td>
+        <td>Include "minutes"</td>
+      </tr>
+      <tr>
+        <td align="right"><input type="checkbox" id="showAMPM" /></td>
+        <td>Show AM/PM</td>
+      </tr>
+      <tr>
+        <td>&#160;</td>
+        <td>Message: <input type="text" id="userWords" size="25" placeholder="Message text"/></td>
+      </tr>
+      <tr>
+        <td>&#160;</td>
+        <td>Show date: <input type="text" id="showDate" placeholder="Show date string"/></td>
+      </tr>
+      <tr>
+        <td>&#160;</td>
+        <td>In the show date string, [YYYY] = the year; [YY] = the year mod 100.
+[M] = the month (1-12); [0M] = zero padded; [MM] = space padded.
+[Month] = the month name; [MONTH] = capitalized.
+[D] = the day of the month [0D] = zero padded; [DD] = space padded.
+[Dow] = the day of the week; [DOW] = capitalized.</td>
+      </tr>
+    </table>
+
+    <h2>Names of months</h2>
+
+    <ol>
+      <li><input type="text" id="month0" size="15" /></li>
+      <li><input type="text" id="month1" size="15" /></li>
+      <li><input type="text" id="month2" size="15" /></li>
+      <li><input type="text" id="month3" size="15" /></li>
+      <li><input type="text" id="month4" size="15" /></li>
+      <li><input type="text" id="month5" size="15" /></li>
+      <li><input type="text" id="month6" size="15" /></li>
+      <li><input type="text" id="month7" size="15" /></li>
+      <li><input type="text" id="month8" size="15" /></li>
+      <li><input type="text" id="month9" size="15" /></li>
+      <li><input type="text" id="month10" size="15" /></li>
+      <li><input type="text" id="month11" size="15" /></li>
+    </ol>
+
+    <p>Names of the days of the week</p>
+
+    <ol>
+      <li><input type="text" id="day0" size="15" /></li>
+      <li><input type="text" id="day1" size="15" /></li>
+      <li><input type="text" id="day2" size="15" /></li>
+      <li><input type="text" id="day3" size="15" /></li>
+      <li><input type="text" id="day4" size="15" /></li>
+      <li><input type="text" id="day5" size="15" /></li>
+      <li><input type="text" id="day6" size="15" /></li>
+    </ol>
+
+    <p>
+      <input type="submit" id="submitSave" class="submit" name="action" value="Save" />
+      <input type="submit" id="submitCancel" class="submit" name="action" value="Cancel" />
+    </p>
+
+    <p><input type="checkbox" id="forceRebuild" /> Redraw face even if no settings have changed.</p>
+</div>
+
+<div id="fail">
+<h1>ERROR</h1>
+<p>Cannot create a clock face with the specified settings. Add more
+rows and/or columns, or reduce the number of words in the message
+text.</p>
+<p><a id="fixSettings" href="#">Change Settings</a></p>
+</div>
+
+</body>
+</html>
