@@ -4,7 +4,7 @@
 
 var maxRows = 16;
 var maxCols = 16;
-var maxRetry = 400;
+var maxRetry = 800;
 
 // System variables
 
@@ -19,7 +19,7 @@ var animated = false;
 var highlight = false;
 var fontFamily = "Helvetica";
 
-var bgColor = "#617187";
+var bgColor = "#000000";
 var loColor = "#404040";
 var hiColor = "#ffffff";
 var msgColor = "#FFAAAA";
