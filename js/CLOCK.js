@@ -4,7 +4,7 @@
 
 var maxRows = 16;
 var maxCols = 16;
-var maxRetry = 800;
+var maxRetry = 32000;
 
 // System variables
 
@@ -56,7 +56,8 @@ $(document).ready(function() {
     } else {
         createTable();
         formatTable();
-        updateTime();
+
+        $(window).resize(formatTable);
     }
 });
 
@@ -278,7 +279,8 @@ function showTime(date) {
     }
 
     if (animated) {
-        $("#clock").everyTime(75, function(count) { toggleChar(show, count) }, (clockWidth*clockHeight)+1);
+        $("#clock").everyTime(75, function(count) {
+            toggleChar(show, count) }, (clockWidth*clockHeight)+1);
     } else {
         for (row = 0; row < clockHeight; row++) {
             for (col = 0; col < clockWidth; col++) {
@@ -506,6 +508,7 @@ function formatTable() {
             }
         }
     }
+    updateTime();
 }
 
 // ============================================================
@@ -751,11 +754,11 @@ function shuffleInPlace(anArray) {
 // ============================================================
 
 function showSettings() {
-    $("#upperCase").attr("checked", upperCase);
-    $("#showMinutes").attr("checked", showMinutes);
-    $("#animated").attr("checked", animated);
-    $("#highlight").attr("checked", highlight);
-    $("#showAMPM").attr("checked", showAMPM);
+    $("#upperCase").prop("checked", upperCase);
+    $("#showMinutes").prop("checked", showMinutes);
+    $("#animated").prop("checked", animated);
+    $("#highlight").prop("checked", highlight);
+    $("#showAMPM").prop("checked", showAMPM);
 
     $("#bgColor").val(bgColor.substring(1));
     $("#hiColor").val(hiColor.substring(1));
@@ -798,16 +801,16 @@ function showSettings() {
     $("#userWords").val(curMessage);
 
     $("#clockWidth option").each(function() {
-        $(this).attr("selected", "");
+        $(this).prop("selected", "");
         if ($(this).val() == clockWidth) {
-            $(this).attr("selected", "selected");
+            $(this).prop("selected", "selected");
         }
     });
 
     $("#clockHeight option").each(function() {
-        $(this).attr("selected", "");
+        $(this).prop("selected", "");
         if ($(this).val() == clockHeight) {
-            $(this).attr("selected", "selected");
+            $(this).prop("selected", "selected");
         }
     });
 
@@ -885,9 +888,9 @@ function saveSettings() {
     var curAMPM = showAMPM;
     var curWidth = clockWidth;
     var curHeight = clockHeight;
-    var rebuild = $("#forceRebuild").attr("checked");
+    var rebuild = $("#forceRebuild").prop("checked");
 
-    $("#forceRebuild").attr("checked",false);
+    $("#forceRebuild").prop("checked",false);
 
     var curMessage = "";
     for (var pos = 0; pos < userWords.length; pos++) {
@@ -897,11 +900,11 @@ function saveSettings() {
         curMessage += userWords[pos];
     }
 
-    upperCase = $("#upperCase").attr("checked");
-    showMinutes = $("#showMinutes").attr("checked");
-    showAMPM = $("#showAMPM").attr("checked");
-    animated = $("#animated").attr("checked");
-    highlight = $("#highlight").attr("checked");
+    upperCase = $("#upperCase").prop("checked");
+    showMinutes = $("#showMinutes").prop("checked");
+    showAMPM = $("#showAMPM").prop("checked");
+    animated = $("#animated").prop("checked");
+    highlight = $("#highlight").prop("checked");
 
     rebuild = rebuild || (showDate != $("#showDate").val());
     showDate = $("#showDate").val();
@@ -924,13 +927,13 @@ function saveSettings() {
     }
 
     $("#clockWidth option").each(function() {
-        if ($(this).attr("selected")) {
+        if ($(this).prop("selected")) {
             clockWidth = parseInt($(this).val());
         }
     });
 
     $("#clockHeight option").each(function() {
-        if ($(this).attr("selected")) {
+        if ($(this).prop("selected")) {
             clockHeight = parseInt($(this).val());
         }
     });

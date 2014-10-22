@@ -5,6 +5,6 @@ css/explorer.css
 css/mobile.css
 index.html
 js/CLOCK.js
-js/jquery-1.4.4.min.js
+js/jquery-2.1.1.min.js
 js/jquery.timers-1.2.js
 js/mobile.js
