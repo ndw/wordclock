@@ -6,4 +6,9 @@ and
 
   http://blog.makezine.com/archive/2009/09/qlocktwo_clock_tells_time_with_word.html
 
-I don't recall now where I first encountered it. Someone's link on twitter.
+I don't recall now where I first encountered it. Someone's link on Twitter.
+
+Change history:
+
+* 2.0.x: Improved "app" functionality, improved settings UI, code cleanup.
+* 2.1.x: Added support for specifying a time zone. More code cleanup.

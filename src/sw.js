@@ -19,7 +19,9 @@ self.addEventListener('install', e => {
     `/img/logo-180.png?timestamp=${timeStamp}`,
     `/img/open.png?timestamp=${timeStamp}`,
     `/js/CLOCK.js?timestamp=${timeStamp}`,
-    `/js/jquery-3.3.1.min.js?timestamp=${timeStamp}`
+    `/js/jquery-3.3.1.min.js?timestamp=${timeStamp}`,
+    `/js/js-joda-timezone.min.js?timestamp=${timeStamp}`,
+    `/js/js-joda.min.js?timestamp=${timeStamp}`
   ];
 
   e.waitUntil(

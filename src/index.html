@@ -100,6 +100,12 @@
 [D] = the day of the month [0D] = zero padded; [DD] = space padded.
 [Dow] = the day of the week; [DOW] = capitalized.</p>
 
+    <p>Time zone:
+    <select id="timezone">
+      <option value="[SYSTEM]">system local time</option>
+    </select>
+    </p>
+
     <p>Changing settings reformats the clock face.</p>
   </div>
 
@@ -174,6 +180,15 @@ rows and/or columns, or reduce the number of words in the message
 text.</p>
 <p><a id="fixSettings" href="#">Change Settings</a></p>
 </div>
+
+<script src="/js/js-joda.min.js"></script>
+<script src="/js/js-joda-timezone.min.js"></script>
+<script>
+    // use js-joda-timezone
+    JSJoda.use(JSJodaTimezone)
+    // copy all js-joda classes to the global scope
+    for(let key in JSJoda) { this[key] = JSJoda[key]; }
+</script>
 
 <script>
   if('serviceWorker' in navigator) {

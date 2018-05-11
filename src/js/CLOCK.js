@@ -11,12 +11,15 @@ let maxRetry = 32000;
 let clockFace = null;
 let clockData = null;
 let clockFail = false;
+let zoneId = null;
+let inTimeout = false;
 
 // Options and settings (may be restored from localStorage)
 
 let upperCase = true;
 let highlight = false;
 let fontFamily = "Helvetica";
+let timeZone = "[SYSTEM]";
 
 let bgColor = "#000000";
 let loColor = "#404040";
@@ -30,7 +33,6 @@ let showMinutes = false;
 let showAMPM = false;
 let userWords = [];
 let showDate = "";
-let last5 = -1;
 
 let MONTHS = [ "January", "February", "March", "April", "May",
                "June", "July", "August", "September", "October",
@@ -56,8 +58,9 @@ $(document).ready(function() {
   } else {
     createTable();
     formatTable();
+    updateTime();
 
-    $(window).resize(formatTable);
+    $(window).resize(resizeWindow);
   }
 
   $(".toggle").click(function (event) {
@@ -73,6 +76,16 @@ $(document).ready(function() {
       $(this).prev().css("display", "inline");
     }
   });
+
+  // Initialize the list of time zones in the settings page
+  for (let zone of ZoneId.getAvailableZoneIds()) {
+    let opt = "<option value='" + zone + "'";
+    if (zone === timeZone) {
+      opt += " selected='selected'";
+    }
+    opt += ">" + zone + "</option>";
+    $("#timezone").append(opt);
+  }
 });
 
 // ======================================================================
@@ -99,16 +112,22 @@ function failMessage() {
 }
 // ======================================================================
 
+function updateTimeout() {
+  inTimeout = false;
+  updateTime();
+}
+
 function updateTime() {
   if (clockFail) {
     failMessage();
     return;
   }
-  showTime(new Date());
+  showTime();
 }
 
-function showTime(date) {
-  let time = Math.floor(date.getTime() / 1000);
+function showTime() {
+  let now = ZonedDateTime.now(zoneId);
+  let time = now.get(ChronoField.INSTANT_SECONDS);
   let near5 = time - (time % 300);
   let countdown = 300 - (time - near5);
 
@@ -116,23 +135,14 @@ function showTime(date) {
     near5 += 300;
   }
 
-  if (near5 === last5) {
-    // We're almost there, check every second
-    setTimeout(updateTime, 1000);
-    return;
-  }
-
-  last5 = near5;
-
   let row = 0;
   let col = 0;
   let pos = 0;
 
-  let date5 = date;
-  date5.setTime(near5*1000);
+  let date5 = ZonedDateTime.ofInstant(Instant.ofEpochSecond(near5), zoneId);
 
-  let hours = date5.getHours();
-  let minutes = date5.getMinutes();
+  let hours = date5.get(ChronoField.HOUR_OF_DAY);
+  let minutes = date5.get(ChronoField.MINUTE_OF_HOUR);
 
   let past = null;
   if (minutes > 30) {
@@ -310,15 +320,19 @@ function showTime(date) {
     }, 800);
   }
 
-  // Wait until the next turnover
-  if (countdown < 150) {
-    // Counter-intuitively, if there's less then 2.5 minutes to
-    // go until the next switch over, we've already "rounded up"
-    // so we can wait until the next switch over.
+  // Wait until the next turnover.
+  // Round up or down to the next interval on the 2.5 minute mark.
+  if (countdown > 150) {
+    countdown -= 150;
+  } else if (countdown < 150) {
     countdown += 150;
   }
-  countdown -= 5; // But we won't assume the clock is perfectly reliable
-  setTimeout(updateTime, countdown * 1000);
+  countdown += 1; // Make sure we're in the next interval
+
+  if (!inTimeout) {
+    inTimeout = true;
+    setTimeout(updateTimeout, countdown * 1000);
+  }
 }
 
 function updateLetter(show, row, col) {
@@ -451,6 +465,11 @@ function createTable() {
   }
 }
 
+function resizeWindow() {
+  formatTable();
+  updateTime();
+}
+
 function formatTable() {
   $("body").css("background-color", bgColor);
   $("body").css("color", loColor);
@@ -514,7 +533,6 @@ function formatTable() {
       }
     }
   }
-  updateTime();
 }
 
 // ============================================================
@@ -892,6 +910,7 @@ function saveSettings() {
   let curAMPM = showAMPM;
   let curWidth = clockWidth;
   let curHeight = clockHeight;
+  let curTZ = timeZone;
   let rebuild = $("#forceRebuild").prop("checked");
 
   $("#forceRebuild").prop("checked",false);
@@ -912,6 +931,13 @@ function saveSettings() {
   rebuild = rebuild || (showDate != $("#showDate").val());
   showDate = $("#showDate").val();
   fontFamily = $("#fontFamily").val();
+  timeZone = $("#timezone").val();
+
+  if (timeZone === "[SYSTEM]") {
+    zoneId = Clock.systemDefaultZone().zone();
+  } else {
+    zoneId = ZoneId.of(timeZone);
+  }
 
   for (let pos = 0; pos < 12; pos++) {
     rebuild = rebuild || (MONTHS[pos] != $("#month"+pos).val());
@@ -943,6 +969,7 @@ function saveSettings() {
 
   rebuild = rebuild || (curWidth != clockWidth || curHeight != clockHeight);
   rebuild = rebuild || (curMinutes != showMinutes) || (curAMPM != showAMPM);
+  rebuild = rebuild || (timeZone != curTZ);
 
   let bgCurrent = bgColor;
   let loCurrent = loColor;
@@ -1067,13 +1094,13 @@ function storeSession() {
   localStorage.setItem("upperCase", upperCase);
   localStorage.setItem("highlight", highlight);
   localStorage.setItem("fontFamily", fontFamily);
+  localStorage.setItem("timeZone", timeZone);
 
   localStorage.setItem("bgColor", bgColor);
   localStorage.setItem("loColor", loColor);
   localStorage.setItem("hiColor", hiColor);
   localStorage.setItem("msgColor", msgColor);
   localStorage.setItem("dateColor", dateColor);
-  localStorage.setItem("fontFamily", fontFamily);
 
   localStorage.setItem("clockWidth", clockWidth);
   localStorage.setItem("clockHeight", clockHeight);
@@ -1109,6 +1136,13 @@ function loadSession() {
   upperCase = lsBoolean("upperCase", upperCase);
   highlight = lsBoolean("highlight", highlight);
   fontFamily = lsString("fontFamily", fontFamily);
+  timeZone = lsString("timeZone", timeZone);
+
+  if (timeZone === "[SYSTEM]") {
+    zoneId = Clock.systemDefaultZone().zone();
+  } else {
+    zoneId = ZoneId.of(timeZone);
+  }
 
   bgColor = lsString("bgColor", bgColor);
   loColor = lsString("loColor", loColor);
