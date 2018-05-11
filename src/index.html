@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>WORD CLOCK</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/CLOCK.css" />
+<meta name="viewport" content="user-scalable=no, width=device-width" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="shortcut icon" href="img/logo-016.png" type="image/png" />
+<link rel="apple-touch-icon" sizes="64x64" href="img/logo-064.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="img/logo-152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="img/logo-180.png" />
+<link rel="apple-touch-icon" sizes="167x167" href="img/logo-167.png" />
+<link rel="apple-touch-startup-image" href="/img/logo-180.png" />
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/CLOCK.js"></script>
+</head>
+<body>
+
+<div id="main">
+  <div id="clock"></div>
+</div>
+
+<div id="settings" style="display: none;">
+  <h1>Word Clock version @@VERSION@@</h1>
+
+  <h2 id="font">
+    <span class="open toggle">+</span>
+    <span class="close toggle">-</span>
+    Fonts and colors
+  </h2>
+
+  <div id="fontsettings" class="close">
+    <p><input type="checkbox" id="upperCase" /> Capitalize letters,
+    <input type="checkbox" id="highlight" /> Highlight message</p>
+
+    <div>
+      #<input type="text" size="6" maxlength="6" id="bgColor" value="000000"/>
+      Background color (<span id="bgColorTxt">            </span>)
+    </div>
+    <div>
+      #<input type="text" size="6" maxlength="6" id="hiColor" value="ffffff"/>
+      Highlight color (<span id="hiColorTxt">sample</span>)
+    </div>
+    <div>
+      #<input type="text" size="6" maxlength="6" id="loColor" value="404040"/>
+      Normal color (<span id="loColorTxt">sample</span>)
+    </div>
+    <div>
+      #<input type="text" size="6" maxlength="6" id="msgColor" value="ff0000"/>
+      Message color (<span id="msgColorTxt">sample</span>)
+    </div>
+    <div>
+      #<input type="text" size="6" maxlength="6" id="dateColor" value="404040"/>
+      Date color (<span id="dateColorTxt">sample</span>)
+    </div>
+
+    <p>Font family: <input id="fontFamily" type="text" size="25"/>.</p>
+  </div>
+
+  <h2 id="klock">
+    <span class="open toggle">+</span>
+    <span class="close toggle">-</span>
+    Settings
+  </h2>
+
+  <div id="klocksettings" class="close">
+    <p>Clock face size:
+      <select id="clockWidth">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select> rows by
+      <select id="clockHeight">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select> columns.
+    </p>
+
+    <p><input type="checkbox" id="showMinutes" /> Include "minutes",
+    <input type="checkbox" id="showAMPM" /> Show AM/PM</p>
+
+    <p>Message: <input type="text" id="userWords" size="25" placeholder="Message text"/>
+    </p>
+
+    <p>Show date: <input type="text" id="showDate" placeholder="Show date string"/></p>
+
+    <p>In the show date string, [YYYY] = the year; [YY] = the year mod 100.
+[M] = the month (1-12); [0M] = zero padded; [MM] = space padded.
+[Month] = the month name; [MONTH] = capitalized.
+[D] = the day of the month [0D] = zero padded; [DD] = space padded.
+[Dow] = the day of the week; [DOW] = capitalized.</p>
+
+    <p>Changing settings reformats the clock face.</p>
+  </div>
+
+  <h2 id="name">
+    <span class="open toggle">+</span>
+    <span class="close toggle">-</span>
+    Names
+  </h2>
+
+  <p>Months of the year</p>
+
+  <div id="namesettings" class="close">
+    <ol>
+      <li><input type="text" id="month0" size="15" /></li>
+      <li><input type="text" id="month1" size="15" /></li>
+      <li><input type="text" id="month2" size="15" /></li>
+      <li><input type="text" id="month3" size="15" /></li>
+      <li><input type="text" id="month4" size="15" /></li>
+      <li><input type="text" id="month5" size="15" /></li>
+      <li><input type="text" id="month6" size="15" /></li>
+      <li><input type="text" id="month7" size="15" /></li>
+      <li><input type="text" id="month8" size="15" /></li>
+      <li><input type="text" id="month9" size="15" /></li>
+      <li><input type="text" id="month10" size="15" /></li>
+      <li><input type="text" id="month11" size="15" /></li>
+    </ol>
+
+    <p>Days of the week</p>
+
+    <ol>
+      <li><input type="text" id="day0" size="15" /></li>
+      <li><input type="text" id="day1" size="15" /></li>
+      <li><input type="text" id="day2" size="15" /></li>
+      <li><input type="text" id="day3" size="15" /></li>
+      <li><input type="text" id="day4" size="15" /></li>
+      <li><input type="text" id="day5" size="15" /></li>
+      <li><input type="text" id="day6" size="15" /></li>
+    </ol>
+  </div>
+
+  <p>
+    <input type="submit" id="submitSave" class="submit" name="action" value="Save" />
+    <input type="submit" id="submitCancel" class="submit" name="action" value="Cancel" />
+  </p>
+
+  <p>
+    <input type="checkbox" id="forceRebuild" />
+    Redraw face even if no settings have changed.
+  </p>
+
+  <p>Copyright 2010-2018 Norman Walsh, <a href="https://nwalsh.com/">https://nwalsh.com/</a>.
+  Inspired by
+  <a href="https://qlocktwo.com/en/qlocktwo-classic/">QLOCKTWO</a>
+  and a <a href="https://makezine.com/">Make:</a> DIY
+  <a href="https://makezine.com/2009/09/27/httpblogmakezinecomarchive200909ql/">project</a>.
+  </p>
+</div>
+
+<div id="fail" style="display: none;">
+<h1>ERROR</h1>
+<p>Cannot create a clock face with the specified settings. Add more
+rows and/or columns, or reduce the number of words in the message
+text.</p>
+<p><a id="fixSettings" href="#">Change Settings</a></p>
+</div>
+
+<script>
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(function(registration) {
+            console.log('Word Clock service worker @@VERSION@@ registered');
+      });
+
+    navigator.serviceWorker.ready.then(function(registration) {
+       console.log('Word Clock service worker @@VERSION@@ ready');
+    });
+  }
+</script>
+
+</body>
+</html>

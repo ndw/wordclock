@@ -1,0 +1,27 @@
+#main {
+    padding-top: 200px;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.row .cell {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 77px;
+    height: 77px;
+    font-size: 75px;
+}
+
+.l {
+    text-align: center;
+    color: rgb(64,64,64);
+}
+
+.h {
+    text-align: center;
+    color: white;
+}
