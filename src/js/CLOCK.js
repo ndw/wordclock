@@ -30,6 +30,7 @@ let showMinutes = false;
 let showAMPM = false;
 let userWords = [];
 let showDate = "";
+let last5 = -1;
 
 let MONTHS = [ "January", "February", "March", "April", "May",
                "June", "July", "August", "September", "October",
@@ -107,20 +108,25 @@ function updateTime() {
 }
 
 function showTime(date) {
+  let time = Math.floor(date.getTime() / 1000);
+  let near5 = time - (time % 300);
+  let countdown = 300 - (time - near5);
+
+  if (countdown < 150) {
+    near5 += 300;
+  }
+
+  if (near5 === last5) {
+    // We're almost there, check every second
+    setTimeout(updateTime, 1000);
+    return;
+  }
+
+  last5 = near5;
+
   let row = 0;
   let col = 0;
   let pos = 0;
-  let time = Math.floor(date.getTime() / 1000);
-  let nextchange = (time - (time % 300)) + 151;
-
-  if (time > nextchange) {
-    nextchange += 300;
-  }
-
-  let near5 = time - (time % 300);
-  if (time - near5 > 150) {
-    near5 += 300;
-  }
 
   let date5 = date;
   date5.setTime(near5*1000);
@@ -304,8 +310,15 @@ function showTime(date) {
     }, 800);
   }
 
-  // Update every 10 seconds
-  setTimeout(updateTime, 10000);
+  // Wait until the next turnover
+  if (countdown < 150) {
+    // Counter-intuitively, if there's less then 2.5 minutes to
+    // go until the next switch over, we've already "rounded up"
+    // so we can wait until the next switch over.
+    countdown += 150;
+  }
+  countdown -= 5; // But we won't assume the clock is perfectly reliable
+  setTimeout(updateTime, countdown * 1000);
 }
 
 function updateLetter(show, row, col) {
