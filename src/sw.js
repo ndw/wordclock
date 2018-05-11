@@ -10,14 +10,16 @@ self.addEventListener('install', e => {
     `/`,
     `/index.html?timestamp=${timeStamp}`,
     `/sw.js?timestamp=${timeStamp}`,
-    `/js/jquery-3.3.1.min.js?timestamp=${timeStamp}`,
-    `/js/CLOCK.js?timestamp=${timeStamp}`,
     `/css/CLOCK.css?timestamp=${timeStamp}`,
+    `/img/closed.png?timestamp=${timeStamp}`,
+    `/img/logo-016.png?timestamp=${timeStamp}`,
     `/img/logo-064.png?timestamp=${timeStamp}`,
     `/img/logo-152.png?timestamp=${timeStamp}`,
-    `/img/logo-016.png?timestamp=${timeStamp}`,
     `/img/logo-167.png?timestamp=${timeStamp}`,
     `/img/logo-180.png?timestamp=${timeStamp}`,
+    `/img/open.png?timestamp=${timeStamp}`,
+    `/js/CLOCK.js?timestamp=${timeStamp}`,
+    `/js/jquery-3.3.1.min.js?timestamp=${timeStamp}`
   ];
 
   e.waitUntil(

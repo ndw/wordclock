@@ -5,6 +5,7 @@ body {
     color: white;
     margin: 0;
     padding: 0;
+    height: 100vh;
 }
 
 #clock {
@@ -33,16 +34,34 @@ body {
     display: none;
     background-color: #9a9a9a;
     color: black;
-    padding-bottom: 0.25in;
-    margin-bottom: 0px;
     font-size: medium;
-    padding-top: 1em;
-    padding-left: 1em;
-    height: 100vh;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    position: relative;
 }
 
-#settings input {
+#settings .header {
+    padding-top: 1rem;
+}
+
+#settings .body {
+    padding-bottom: 60px;
+    margin-right: 1rem;
+}
+
+#settings .footer {
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+}
+
+#settings input.hex {
     font-family: Courier, monospace;
+}
+
+#settings div {
+    margin-left: 1rem;
 }
 
 #settings table {
@@ -69,6 +88,23 @@ body {
     text-align: center;
 }
 
+#footer {
+    position: absolute;
+    bottom: 0;
+}
+
 .close {
     display: none;
+}
+
+@media screen and (max-width: 321px) {
+    .mwide {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 501px) {
+    .rwide {
+        display: none;
+    }
 }

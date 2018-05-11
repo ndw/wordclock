@@ -23,45 +23,40 @@
 </div>
 
 <div id="settings" style="display: none;">
-  <h1>Word Clock version @@VERSION@@</h1>
+  <div class="header">
+    <h1>Word Clock</h1>
+  </div>
 
+  <div class="body">
   <h2 id="font">
-    <span class="open toggle">+</span>
-    <span class="close toggle">-</span>
-    Fonts and colors
+    <span class="open toggle"><img alt="+" src="/img/closed.png" /></span>
+    <span class="close toggle"><img alt="-" src="/img/open.png" /></span>
+    Font and colors
   </h2>
 
   <div id="fontsettings" class="close">
-    <p><input type="checkbox" id="upperCase" /> Capitalize letters,
-    <input type="checkbox" id="highlight" /> Highlight message</p>
-
-    <div>
-      #<input type="text" size="6" maxlength="6" id="bgColor" value="000000"/>
-      Background color (<span id="bgColorTxt">            </span>)
-    </div>
-    <div>
-      #<input type="text" size="6" maxlength="6" id="hiColor" value="ffffff"/>
-      Highlight color (<span id="hiColorTxt">sample</span>)
-    </div>
-    <div>
-      #<input type="text" size="6" maxlength="6" id="loColor" value="404040"/>
-      Normal color (<span id="loColorTxt">sample</span>)
-    </div>
-    <div>
-      #<input type="text" size="6" maxlength="6" id="msgColor" value="ff0000"/>
-      Message color (<span id="msgColorTxt">sample</span>)
-    </div>
-    <div>
-      #<input type="text" size="6" maxlength="6" id="dateColor" value="404040"/>
-      Date color (<span id="dateColorTxt">sample</span>)
-    </div>
-
     <p>Font family: <input id="fontFamily" type="text" size="25"/>.</p>
+    <p>
+      #<input class="hex" type="text" size="6" maxlength="6" id="bgColor" value="000000"/>
+      Background color (<span id="bgColorTxt">            </span>)
+      <br/>
+      #<input class="hex" type="text" size="6" maxlength="6" id="hiColor" value="ffffff"/>
+      Highlight color (<span id="hiColorTxt">sample</span>)
+      <br/>
+      #<input class="hex" type="text" size="6" maxlength="6" id="loColor" value="404040"/>
+      Normal color (<span id="loColorTxt">sample</span>)
+      <br/>
+      #<input class="hex" type="text" size="6" maxlength="6" id="msgColor" value="ff0000"/>
+      Message color (<span id="msgColorTxt">sample</span>)
+      <br/>
+      #<input class="hex" type="text" size="6" maxlength="6" id="dateColor" value="404040"/>
+      Date color (<span id="dateColorTxt">sample</span>)
+    </p>
   </div>
 
   <h2 id="klock">
-    <span class="open toggle">+</span>
-    <span class="close toggle">-</span>
+    <span class="open toggle"><img alt="+" src="/img/closed.png" /></span>
+    <span class="close toggle"><img alt="-" src="/img/open.png" /></span>
     Settings
   </h2>
 
@@ -85,11 +80,17 @@
       </select> columns.
     </p>
 
-    <p><input type="checkbox" id="showMinutes" /> Include "minutes",
-    <input type="checkbox" id="showAMPM" /> Show AM/PM</p>
+    <p>
+      <input type="checkbox" id="upperCase" /> Capitalize letters
+      <br/>
+      <input type="checkbox" id="showMinutes" /> Include "minutes"
+      <br/>
+      <input type="checkbox" id="showAMPM" /> Show AM/PM</p>
 
     <p>Message: <input type="text" id="userWords" size="25" placeholder="Message text"/>
     </p>
+
+    <p><input type="checkbox" id="highlight" /> Highlight message</p>
 
     <p>Show date: <input type="text" id="showDate" placeholder="Show date string"/></p>
 
@@ -103,14 +104,14 @@
   </div>
 
   <h2 id="name">
-    <span class="open toggle">+</span>
-    <span class="close toggle">-</span>
+    <span class="open toggle"><img alt="+" src="/img/closed.png" /></span>
+    <span class="close toggle"><img alt="-" src="/img/open.png" /></span>
     Names
   </h2>
 
-  <p>Months of the year</p>
-
   <div id="namesettings" class="close">
+    <p>Months of the year</p>
+
     <ol>
       <li><input type="text" id="month0" size="15" /></li>
       <li><input type="text" id="month1" size="15" /></li>
@@ -140,21 +141,30 @@
   </div>
 
   <p>
-    <input type="submit" id="submitSave" class="submit" name="action" value="Save" />
-    <input type="submit" id="submitCancel" class="submit" name="action" value="Cancel" />
-  </p>
-
-  <p>
     <input type="checkbox" id="forceRebuild" />
     Redraw face even if no settings have changed.
   </p>
 
-  <p>Copyright 2010-2018 Norman Walsh, <a href="https://nwalsh.com/">https://nwalsh.com/</a>.
-  Inspired by
+  <hr />
+
+  <p>
+    <input type="submit" id="submitSave" class="submit" name="action" value="Save" />
+    <input type="submit" id="submitCancel" class="submit" name="action" value="Cancel" />
+  </p>
+
+  <p>Version @@VERSION@@</p>
+</div>
+
+<div class="footer">
+  <p>Copyright © 2010-2018 Norman Walsh<span class="mwide">,
+  <a href="https://nwalsh.com/">https://nwalsh.com/</a>.</span>
+  <span class="rwide">Inspired by
   <a href="https://qlocktwo.com/en/qlocktwo-classic/">QLOCKTWO</a>
   and a <a href="https://makezine.com/">Make:</a> DIY
   <a href="https://makezine.com/2009/09/27/httpblogmakezinecomarchive200909ql/">project</a>.
+  </span>
   </p>
+</div>
 </div>
 
 <div id="fail" style="display: none;">
